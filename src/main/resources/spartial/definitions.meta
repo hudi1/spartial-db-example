@@ -1,0 +1,25 @@
+resolve-pojo-on;
+database-is-online;
+database-jdbc-driver oracle.jdbc.OracleDriver;
+database-has-url "jdbc:oracle:thin:@****";
+database-login-username ****;
+database-login-password ****;
+
+pojogen-generate-wrappers;
+pojogen-generate-methods toString isDef toInit;
+pojogen-make-it-final;
+daogen-make-it-final;
+
+//pojogen-types-sqltypes "SDO_GEOMETRY(1)"->oracle.spatial.geometry.JGeometry;
+
+pojogen-types-for-columns COLA_MARKETS SHAPE->oracle.spatial.geometry.JGeometry;
+metagen-column-meta-type COLA_MARKETS SHAPE->geometry;
+
+is-table colaMarkets COLA_MARKETS;
+
+metagen-table-sequence COLA_MARKETS SEQ_COLA_MARKETS;
+
+metagen-make-it-final;
+
+pojogen-package org.example.model.spartial;
+daogen-package org.example.dao.spartial;

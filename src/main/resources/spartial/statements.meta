@@ -1,0 +1,44 @@
+
+INSERT_COLA_MARKETS(CRUD,final=,in=ColaMarkets,out=ColaMarkets,tab=colaMarkets)=
+  insert into %%COLA_MARKETS (%MKT_ID, %NAME, %SHAPE)
+  {= values (:mktId(seq=SEQ_COLA_MARKETS), :name, :shape(type=geometry)) }
+;
+
+GET_COLA_MARKETS(CRUD,final=,in=ColaMarkets,out=ColaMarkets,tab=colaMarkets)=
+  select %MKT_ID @mktId(id), %NAME @name, %SHAPE @shape(type=geometry)
+  from %%COLA_MARKETS
+  {= where
+    {& %MKT_ID = :mktId }
+    {& %NAME = :name }
+    {& %SHAPE = :shape(type=geometry) }
+  }
+;
+
+UPDATE_COLA_MARKETS(CRUD,final=,in=ColaMarkets,out=ColaMarkets,tab=colaMarkets)=
+  update %%COLA_MARKETS
+  {= set
+    { ,%NAME = :name(call=isDef) }
+    { ,%SHAPE = :shape(type=geometry,call=isDef) }
+  }
+  {= where
+    {& %MKT_ID = :mktId(!empty) }
+  }
+;
+
+DELETE_COLA_MARKETS(CRUD,final=,in=ColaMarkets,out=ColaMarkets,tab=colaMarkets)=
+  delete from %%COLA_MARKETS
+  {= where
+    {& %MKT_ID = :mktId(!empty) }
+  }
+;
+
+SELECT_COLA_MARKETS(QRY,final=,in=ColaMarkets,out=ColaMarkets,tab=colaMarkets)=
+  select %MKT_ID @mktId(id), %NAME @name, %SHAPE @shape(type=geometry)
+  from %%COLA_MARKETS
+  {= where
+    {& %MKT_ID = :mktId }
+    {& UPPER(%NAME) like :+name }
+    {& %SHAPE = :shape(type=geometry) }
+  }
+  {#MKT_ID order by %MKT_ID }
+;

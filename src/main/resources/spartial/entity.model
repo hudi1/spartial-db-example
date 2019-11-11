@@ -1,0 +1,13 @@
+package org.example.model.spartial {
+
+    #ToString(mktId,name,shape)
+    final #Pojo ColaMarkets {
+        #PrimaryKey
+        #Index
+        #Attr Byte mktId
+        #IsDef
+        #Attr String name
+        #IsDef
+        #Attr oracle.spatial.geometry.JGeometry shape
+    }
+}
